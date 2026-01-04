@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seminar Registration | BCS Department</title>
+    <link rel="stylesheet" href="./assets/CSS/style.css">
+    <meta name="description" content="Group Discussion Registration Portal By BCS Department">
+    <meta name="keywords" content="Registration">
+    <meta name="subject" content="Seminar">
+    <meta name="copyright" content="HarshTech Organization">
+    <meta name="language" content="English">
+    <meta name="robots" content="index,follow">
+    <meta name="revised" content="saturday,may 3th,2026,8:45 pm">
+    <meta name="abstract" content="HarshTech  specializes in custom Software Development and Web design solutions.">
+    <meta name="topic" content="Software Development">
+    <meta name="summary" content="HarshTech Provides innovative technology solutions for business">
+    <meta name="classification" content="business">
+    <meta name="author" content="Harshad Teli">
+    <meta name="author" content="harshadteli697@gmail.com">
+    <meta name="designer" content="Harshad Teli">
+    <meta name="reply-to" content="harshtech417@gmail.com">
+    <meta name="owner" content="Harshad Teli">
+    <meta name="directory" content="Technology">
+    <meta name="pagename" content="Group Discussion Registration Portal">
+    <meta name="category" content="Web Development">
+    <meta name="coverage" content="Worldwide">
+    <meta name="distribution" content="Global">
+    <link rel="shortcut icon" href="./assets/IMAGES/nck.jpeg" type="image/x-icon">
+<!-- Open Graph Tags (Whatsapp,Facebook,twitter,Instagram,Linkdin) -->
+    <meta property="og:title" content="Seminar Registration | BCS Department">
+    <meta property="og:description" content="Group Discussion Registration Portal By BCS Department at The New College Kolhapur Division - B.">
+    <meta property="og:image" content="https://harshadteli.github.io/nckbcs3/assets/IMAGES/nck.jpeg">
+    <meta property="og:url" content="https://harshadteli.github.io/group-discussion-registration">
+  <!-- For the twitter Card -->
+   <meta name="twitter:Card" content="summary_large_image">
+   <meta name="twitter:title" content="Seminar Registration | BCS Department">
+   <meta name="twitter:description" content="Group Discussion Registration Portal By BCS Department.">
+ <meta name="twitter:image" content="https://harshadteli.github.io/nckbcs3/assets/IMAGES/nck.jpeg">
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"rel="stylesheet">
+</head>
+<body>
+    <header class="hero">
+        <div class="overlay"></div>
+        <div class="container hero-content">
+            <div class="logo-area">
+                <img class="logo" src="./assets/IMAGES/nck.jpeg" style="border-radius: 50%;" height="100px"
+                width="auto" alt="nck-logo">
+                <h1>The New College Kolhapur</h1>
+                <h2>B.C.S Department</h2>
+                <p>BCS - III, Div B</p><br>
+            </div>
+            <div class="event-details">
+                <h3>Group Discussion Seminar</h3>
+                <p class="date"><span class="icon">📅</span> Thursday, 8/1/2026</p>
+                <p class="status">Live Registration Portal</p>
+            </div>
+        </div>
+    </header>
+    <br><br>
+
+    <main class="container">
+        <!-- Stats Dashboard -->
+        <section class="dashboard">
+            <div class="card group-card" id="card-a">
+                <div class="card-header">
+                    <h3>Group A</h3>
+                    <span class="badge" id="badge-a">Open</span>
+                </div>
+                <div class="card-body">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-a"></div>
+                    </div>
+                    <p class="count"><span id="count-a">0</span> / 15 Students</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" id="btn-join-a" onclick="openModal('Group A')">Join Group
+                            A</button>
+                        <a href="./assets/PAGES/group_a.html" class="btn btn-outline" style="margin-left: 0.5rem">View Details</a>
+                    </div>
+                    <p class="warning-text" id="warning-a"></p>
+                </div>
+            </div>
+
+            <div class="card group-card" id="card-b">
+                <div class="card-header">
+                    <h3>Group B</h3>
+                    <span class="badge" id="badge-b">Open</span>
+                </div>
+                <div class="card-body">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-b"></div>
+                    </div>
+                    <p class="count"><span id="count-b">0</span> / 15 Students</p>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" id="btn-join-b" onclick="openModal('Group B')">Join Group
+                            B</button>
+                        <a href="./assets/PAGES/group_b.html" class="btn btn-outline" style="margin-left: 0.5rem">View Details</a>
+                    </div>
+                    <p class="warning-text" id="warning-b"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Data Table -->
+        <section class="data-view">
+            <div class="section-header">
+                <h2>Recent Live Activity</h2>
+                <button class="btn btn-outline" onclick="fetchData()">Refresh Data</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Group</th>
+                            <th>Roll No</th>
+                            <th>Name</th>
+                            <th>Seminar Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Data rows will be inserted here -->
+                        <tr>
+                            <td colspan="5" class="loading">Loading data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Registration Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Join Group</h2>
+            <form id="regGroupForm">
+                <input type="hidden" id="input-group" name="group">
+
+                <div class="form-group">
+                    <label for="input-roll">Roll No</label>
+                    <input type="number" id="input-roll" required placeholder="Enter your Roll No">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-name">Full Name</label>
+                    <input type="text" id="input-name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label>Seminar Date</label>
+                    <input type="text" value="8/1/2026" disabled class="disabled-input">
+                    <small>Auto-filled by server</small>
+                </div>
+
+                <button type="submit" class="btn btn-submit" id="btn-submit">Confirm Registration</button>
+                <p id="form-message" class="message"></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 The New College Kolhapur | BCS Department</p>
+        <marquee scrollamount="7"><p style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: white;">Devloped By Harshad Teli &copy;HarshTech | 2026 | All Rights Reserved.</p></marquee>
+    </footer>
+
+    <script src="./assets/JS/script.js"></script>
+    <script>
+        // Default context
+        window.PAGE_CONTEXT = 'INDEX';
+    </script>
+</body>
+
+</html>

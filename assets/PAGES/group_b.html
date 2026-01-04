@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group B Details | BCS Department</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+        <link rel="shortcut icon" href="../IMAGES/nck.jpeg" type="image/x-icon">
+</head>
+
+<body>
+    <header class="hero page-header group-b-header">
+        <div class="container">
+            <div class="header-nav">
+                <a href="../../index.html" class="btn btn-outline-white">&larr; Back to Home</a>
+            </div>
+            <h1>Group B Participants</h1>
+            <p>Full Registration List</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="data-view full-page">
+            <div class="toolbar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search by Name or Roll No..."
+                        onkeyup="filterTable()">
+                </div>
+                <div class="stats-badge">
+                    Total: <span id="total-count">0</span>/15
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Roll No</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td colspan="4" class="loading">Loading Group B Data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+         <p>&copy; 2026 The New College Kolhapur | BCS Department</p>
+        <marquee scrollamount="7"><p style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: white;">Devloped By Harshad Teli &copy;HarshTech | 2026 | All Rights Reserved.</p></marquee>
+    </footer>
+
+    <!-- Script fix: Define context BEFORE loading script -->
+    <script>
+        window.PAGE_CONTEXT = 'GROUP_B';
+    </script>
+    <script src="../JS/script.js"></script>
+</body>
+
+</html>
