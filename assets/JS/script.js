@@ -379,7 +379,7 @@ function toggleChat() {
     if (isChatOpen) {
         win.classList.add('active');
         if (!hasGreeted) {
-            speak("Welcome to the Seminar Registration Portal developed by BCS Department at The New College Kolhapur. How can I help you?");
+            speak("Welcome to the Seminar Registration Portal developed by BCS Department at The New College Kolhapur under copy right by harshtech. How can I help you?");
             hasGreeted = true;
         }
     } else {
