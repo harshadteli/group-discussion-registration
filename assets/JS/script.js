@@ -1,5 +1,5 @@
 // Backend API URL - Replace if needed
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsia3a2FqqEKB9x4UZIBHi-ibD7BMsYLRfNZOo8TcISim5ruL6MR4tHyuMff6zipoL/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxuKlCe9jhM13EAHtY3CRO9gy2bozb18lxbWlBP_JpVLXWcnkiZOI6FBMN2so__X26D/exec";
 
 // Constants
 const MAX_LIMIT = 15;
@@ -94,8 +94,32 @@ function renderDashboard(data) {
     updateGroupCard('A', data.counts["Group A"]);
     updateGroupCard('B', data.counts["Group B"]);
 
-    // Recent 5
-    const recent = [...data.registrations].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
+    // SPECIAL SEATS LOGIC: Filter out first 4 Group A students from Recent Activity
+    let allRegs = [...data.registrations];
+
+    // 1. Sort Oldest First to find the special seats
+    allRegs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    // 2. Identify IDs/Names of first 4 Group A students
+    let groupACount = 0;
+    const specialSeats = new Set();
+
+    allRegs.forEach(r => {
+        if (String(r.group).trim().toLowerCase() === 'group a') {
+            if (groupACount < 4) {
+                // Use a unique combo key (Roll + Name) to mark for deletion
+                specialSeats.add(`${r.rollNo}_${r.name}`);
+                groupACount++;
+            }
+        }
+    });
+
+    // 3. Filter them out
+    const publicRegs = allRegs.filter(r => !specialSeats.has(`${r.rollNo}_${r.name}`));
+
+    // Recent 5 (from public list)
+    // Sort Newest First for display
+    const recent = publicRegs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
     renderTable(recent);
 }
 
@@ -112,6 +136,12 @@ function updateGroupCard(groupSuffix, count) {
 
     const percentage = Math.min((count / MAX_LIMIT) * 100, 100);
     progressEl.style.width = `${percentage}%`;
+
+    // SPECIAL SEATS LOGIC (Group A only)
+    let displayCount = count;
+    if (groupSuffix === 'A') {
+        displayCount = Math.max(0, count - 4);
+    }
 
     // Limit Check
     if (count >= MAX_LIMIT) {
@@ -144,6 +174,9 @@ function updateGroupCard(groupSuffix, count) {
         btnEl.style.backgroundColor = ""; // reset
         btnEl.style.color = "";
 
+        // Adjust warning threshold for Group A because of hidden seats?
+        // Keeping it simple relative to displayCount or real count?
+        // Using real count for consistency with logic
         if (count < MIN_LIMIT) {
             warningEl.textContent = `Need ${MIN_LIMIT - count} more.`;
             warningEl.style.color = "#ffa000";
@@ -151,6 +184,9 @@ function updateGroupCard(groupSuffix, count) {
             warningEl.textContent = "";
         }
     }
+
+    // Update displayed count LAST to override any other logic
+    countEl.textContent = displayCount;
 }
 
 // ----------------------------------------------------
@@ -158,9 +194,23 @@ function updateGroupCard(groupSuffix, count) {
 // ----------------------------------------------------
 function renderGroupPage(groupName) {
     // Filter (Safe & Case Insensitive)
-    const groupData = currentData.registrations.filter(r =>
+    let groupData = currentData.registrations.filter(r =>
         String(r.group).trim().toLowerCase() === groupName.toLowerCase()
     );
+
+    // SPECIAL SEATS LOGIC (Group A)
+    // Hide oldest 4 (Special Seats)
+    if (groupName.toLowerCase() === 'group a') {
+        // Sort Oldest First to identify the first 4
+        groupData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+        // Remove first 4
+        if (groupData.length <= 4) {
+            groupData = [];
+        } else {
+            groupData = groupData.slice(4);
+        }
+    }
 
     // Update Badge
     const countEl = document.getElementById('total-count');
@@ -204,8 +254,8 @@ function renderTable(registrations, isDetailView = false) {
         return;
     }
 
-    // Sort newest first
-    registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    // Sort Chronologically (Oldest First) so new data appears at the bottom
+    registrations.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
     registrations.forEach(row => {
         const tr = document.createElement('tr');
